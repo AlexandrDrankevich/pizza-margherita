@@ -17,8 +17,7 @@ public class AbstractTest {
     }
 
     @AfterEach
-    public void tearDown() throws InterruptedException {
-        Thread.sleep(3000);
+    public void tearDown() {
         driver.quit();
     }
 }

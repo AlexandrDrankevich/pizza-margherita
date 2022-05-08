@@ -17,7 +17,5 @@ public class dodopizzaTest extends AbstractTest {
                 .chooseProduct(productName)
                 .clickAddProductToCart();
         assertTrue(homePageForYourCity.isProductInCart(productName));
-
     }
-
 }
