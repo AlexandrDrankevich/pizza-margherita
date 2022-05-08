@@ -1,14 +1,12 @@
 package pageobjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,8 +18,6 @@ public class HomePageForYourCity extends AbstractPage {
     private WebElement buttonAdd;
     @FindBy(xpath = "//div[@data-testid='navigation__cart']/button")
     private WebElement buttonCart;
-    @FindBy(xpath = "//section[@data-testid='cart__list']")
-    private WebElement cart;
 
     public HomePageForYourCity(WebDriver driver) {
         super(driver);
@@ -29,12 +25,17 @@ public class HomePageForYourCity extends AbstractPage {
     }
 
     public HomePageForYourCity chooseProduct(String productName) {
-        driver.findElement(By.xpath(String.format(patternProductLocator, productName))).click();
+        waitForVisibilityOfElement(driver.findElement(By.xpath(String.format(patternProductLocator, productName))))
+                .click();
         return this;
     }
 
     public HomePageForYourCity clickAddProductToCart() {
-        buttonAdd.click();
+        try {
+            waitForElementToBeClickable(buttonAdd).click();
+        } catch (StaleElementReferenceException e) {
+            waitForElementToBeClickable(buttonAdd).click();
+        }
         return this;
     }
 
@@ -43,11 +44,16 @@ public class HomePageForYourCity extends AbstractPage {
         return this;
     }
 
+    public HomePageForYourCity chooseProductAddToCart(String productName) {
+        chooseProduct(productName);
+        clickAddProductToCart();
+        return this;
+    }
+
     public boolean isProductInCart(String productName) {
-        clickCart();
-        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS)).until(ExpectedConditions.visibilityOf(cart));
+        waitForVisibilityOfElement(driver.findElement(By.xpath(cartElementsLocator)));
         List<WebElement> elements = driver.findElements(By.xpath(cartElementsLocator));
-        List<String> productCollect = elements.stream().map(s -> s.getText()).collect(Collectors.toList());
+        List<String> productCollect = elements.stream().map(WebElement::getText).collect(Collectors.toList());
         return productCollect.contains(productName);
     }
 }
