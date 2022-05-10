@@ -12,7 +12,7 @@ public class DodopizzaTest extends AbstractTest {
     private final String drinkName = "Pepsi";
 
     @Test
-    public void testAddPizzaToCart() {
+    public void testAddProductToCart() {
         CartPage cartPage = new HomePage(driver)
                 .openPage().chooseCity(cityName)
                 .chooseProductAddToCart(pizzaName)
