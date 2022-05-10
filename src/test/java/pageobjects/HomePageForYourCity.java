@@ -30,7 +30,7 @@ public class HomePageForYourCity extends AbstractPage {
         return this;
     }
 
-    public HomePageForYourCity clickAddProductToCart() {
+    public HomePageForYourCity clickButtonAddProductToCart() {
         try {
             waitForElementToBeClickable(buttonAdd).click();
         } catch (StaleElementReferenceException e) {
@@ -39,14 +39,14 @@ public class HomePageForYourCity extends AbstractPage {
         return this;
     }
 
-    public HomePageForYourCity clickCart() {
+    public HomePageForYourCity clickButtonCart() {
         buttonCart.click();
         return this;
     }
 
     public HomePageForYourCity chooseProductAddToCart(String productName) {
         chooseProduct(productName);
-        clickAddProductToCart();
+        clickButtonAddProductToCart();
         return this;
     }
 

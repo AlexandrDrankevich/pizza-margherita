@@ -17,7 +17,7 @@ public class DodopizzaTest extends AbstractTest {
                 .openPage().chooseCity(cityName)
                 .chooseProductAddToCart(pizzaName)
                 .chooseProductAddToCart(drinkName)
-                .clickCart();
+                .clickButtonCart();
         assertTrue(homePageForYourCity.isProductInCart(pizzaName));
         assertTrue(homePageForYourCity.isProductInCart(drinkName));
     }
