@@ -21,6 +21,5 @@ public class HomePage extends AbstractPage {
     public HomePageForYourCity chooseCity(String city) {
         driver.findElement(By.xpath(String.format(patternCityLocator, city))).click();
         return new HomePageForYourCity(driver);
-
     }
 }
