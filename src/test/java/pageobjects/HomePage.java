@@ -23,6 +23,4 @@ public class HomePage extends AbstractPage {
         return new HomePageForYourCity(driver);
 
     }
-
-
 }
