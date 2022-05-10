@@ -7,13 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class HomePageForYourCity extends AbstractPage {
 
     private String patternProductLocator = "//div[@data-gtm-id='product-title'][contains(text(),'%s')]";
-    private String cartElementsLocator = "//section[@data-testid='cart__list']//h3";
     @FindBy(xpath = "//button[contains(text(),'Добавить')]")
     private WebElement buttonAdd;
     @FindBy(xpath = "//div[@data-testid='navigation__cart']/button")
@@ -39,21 +35,14 @@ public class HomePageForYourCity extends AbstractPage {
         return this;
     }
 
-    public HomePageForYourCity clickButtonCart() {
+    public CartPage clickButtonCart() {
         buttonCart.click();
-        return this;
+        return new CartPage(driver);
     }
 
     public HomePageForYourCity chooseProductAddToCart(String productName) {
         chooseProduct(productName);
         clickButtonAddProductToCart();
         return this;
-    }
-
-    public boolean isProductInCart(String productName) {
-        waitForVisibilityOfElement(driver.findElement(By.xpath(cartElementsLocator)));
-        List<WebElement> elements = driver.findElements(By.xpath(cartElementsLocator));
-        List<String> productCollect = elements.stream().map(WebElement::getText).collect(Collectors.toList());
-        return productCollect.contains(productName);
     }
 }
