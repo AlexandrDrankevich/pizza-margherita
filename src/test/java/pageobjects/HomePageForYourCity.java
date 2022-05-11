@@ -36,7 +36,7 @@ public class HomePageForYourCity extends AbstractPage {
     }
 
     public CartPage clickButtonCart() {
-        buttonCart.click();
+        waitForElementToBeClickable(buttonCart).click();
         return new CartPage(driver);
     }
 
